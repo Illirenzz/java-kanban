@@ -10,8 +10,6 @@ public class TaskManager {
     private final HashMap<Integer, EpicTask> epicTasks;
     private int id = 1;
 
-    //ВОПРОС, стоит ли делать этот класс синглтоном и синхронизировать методы?
-    //или сделать все поля и методы нестатичными?
     public TaskManager() {
         tasks = new HashMap<>();
         subTasks = new HashMap<>();
