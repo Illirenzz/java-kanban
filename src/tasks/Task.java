@@ -5,7 +5,7 @@ public class Task extends AbstractTask {
         super(name, description);
     }
 
-    void setStatus(Status status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 }
