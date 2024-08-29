@@ -1,4 +1,4 @@
-package tasks;
+package model;
 
 public class SubTask extends Task {
     private final int epicID;
@@ -7,12 +7,8 @@ public class SubTask extends Task {
         super(name, description);
         this.epicID = epicID;
     }
-
     public int getEpicID() {
         return epicID;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 }

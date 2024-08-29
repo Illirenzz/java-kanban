@@ -1,14 +1,13 @@
-package tasks;
+package model;
 
 import java.util.Objects;
 
-public class AbstractTask {
-    private final String name;
-    private final String description;
-    Status status;
+public class Task {
+    protected Status status;
+    private String name;
+    private String description;
     private int id;
-
-    public AbstractTask(String name, String description) {
+    public Task(String name, String description) {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
@@ -17,7 +16,7 @@ public class AbstractTask {
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractTask task)) return false;
+        if (!(o instanceof Task task)) return false;
         return id == task.id;
     }
 
@@ -30,8 +29,16 @@ public class AbstractTask {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getId() {
@@ -54,5 +61,9 @@ public class AbstractTask {
                 ", id=" + id +
                 ", status=" + status +
                 '}';
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
