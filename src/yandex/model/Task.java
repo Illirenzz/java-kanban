@@ -1,4 +1,4 @@
-package model;
+package yandex.model;
 
 import java.util.Objects;
 

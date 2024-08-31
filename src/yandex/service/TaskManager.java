@@ -1,9 +1,9 @@
-package service;
+package yandex.service;
 
-import model.EpicTask;
-import model.Status;
-import model.SubTask;
-import model.Task;
+import yandex.model.EpicTask;
+import yandex.model.Status;
+import yandex.model.SubTask;
+import yandex.model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,16 +27,16 @@ public class TaskManager {
         return task;
     }
 
-    public SubTask create(SubTask subTask) {
+    public SubTask create(SubTask subTask, int epicId) {
         subTask.setId(id++);
         subTasks.put(subTask.getId(), subTask);
+        epicTasks.get(epicId).addNewSubTask(subTask.getId());
         updateEpicStatus(epicTasks.get(subTask.getEpicID()));
         return subTask;
     }
 
     public EpicTask create(EpicTask epicTask) {
         epicTask.setId(id++);
-        epicTask.setStatus(Status.NEW);
         epicTasks.put(epicTask.getId(), epicTask);
         return epicTask;
     }
@@ -81,7 +81,10 @@ public class TaskManager {
 
     public void removeAllSubTasks() {
         subTasks.clear();
-        epicTasks.forEach((k, v) -> updateEpicTask(v));
+        epicTasks.forEach((k, v) -> {
+            v.getSubTaskIDs().clear();
+            updateEpicStatus(v);
+        });
     }
 
     public void removeAllEpicTasks() {
@@ -106,6 +109,7 @@ public class TaskManager {
     }
 
     public void removeSubTaskById(int id) {
+        epicTasks.get(subTasks.get(id)).removeSubTaskById(id);
         updateEpicTask(epicTasks.get(subTasks.get(id).getEpicID()));
         subTasks.remove(id);
     }
@@ -114,8 +118,8 @@ public class TaskManager {
         List<Integer> subTaskList = epicTasks.get(id).getSubTaskIDs();
 
         if (!subTaskList.isEmpty()) {
-            for (int i : subTaskList) {
-                subTasks.remove(i);
+            for (int subtaskId : subTaskList) {
+                subTasks.remove(subtaskId);
             }
         }
         epicTasks.remove(id);
@@ -124,8 +128,8 @@ public class TaskManager {
     public List<SubTask> getAllEpicSubtaskById(int id) {
         List<Integer> subs = epicTasks.get(id).getSubTaskIDs();
         List<SubTask> result = new ArrayList<>();
-        for (Integer i : subs) {
-            result.add(subTasks.get(i));
+        for (Integer subTaskId : subs) {
+            result.add(subTasks.get(subTaskId));
         }
         return result;
     }
@@ -135,15 +139,21 @@ public class TaskManager {
         Status status = null;
         List<SubTask> subTaskList = new ArrayList<>();
 
-        for (Integer i : epicTask.getSubTaskIDs()) {
-            subTaskList.add(subTasks.get(i));
+        int isDone = 0;
+        int isNew = 0;
+        for (Integer subTaskId : epicTask.getSubTaskIDs()) {
+            SubTask tmpSubtaskForCalculate = subTasks.get(subTaskId);
+            subTaskList.add(tmpSubtaskForCalculate);
+            if (tmpSubtaskForCalculate.getStatus() == Status.DONE) {
+                isDone++;
+            } else if (tmpSubtaskForCalculate.getStatus() == Status.NEW) {
+                isNew++;
+            }
         }
-        boolean isAllNew = subTaskList.stream().allMatch(x -> x.getStatus() == Status.NEW);
-        boolean isAllDone = subTaskList.stream().allMatch(x -> x.getStatus() == Status.DONE);
 
-        if (subTaskList.isEmpty() || isAllNew) {
+        if (subTaskList.isEmpty() || isNew == subTaskList.size()) {
             status = Status.NEW;
-        } else if (isAllDone) {
+        } else if (isDone == subTaskList.size()) {
             status = Status.DONE;
         } else {
             status = Status.IN_PROGRESS;

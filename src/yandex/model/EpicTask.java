@@ -1,35 +1,34 @@
-package model;
+package yandex.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EpicTask extends Task {
-    private final List<Integer> subTaskID;
+    private final List<Integer> subTaskIds;
 
     public EpicTask(String name, String description) {
         super(name, description);
-        subTaskID = new ArrayList<>();
+        subTaskIds = new ArrayList<>();
     }
 
 
     public void addNewSubTask(int subTask) {
-        subTaskID.add(subTask);
+        subTaskIds.add(subTask);
     }
 
     public List<Integer> getSubTaskIDs() {
-        return subTaskID;
-    }
-
-    @Override
-    public Status getStatus() {
-        return super.getStatus();
+        return subTaskIds;
     }
 
     @Override
     public String toString() {
         return super.toString() +
-                "\b,subTaskList=" + subTaskID +
+                "\b,subTaskList=" + subTaskIds +
                 '}';
+    }
+
+    public void removeSubTaskById(int id) {
+        subTaskIds.remove(id);
     }
 
 }

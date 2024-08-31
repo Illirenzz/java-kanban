@@ -1,4 +1,4 @@
-package model;
+package yandex.model;
 
 public class SubTask extends Task {
     private final int epicID;

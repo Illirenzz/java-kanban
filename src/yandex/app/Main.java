@@ -1,10 +1,10 @@
-package app;
+package yandex.app;
 
-import model.EpicTask;
-import model.Status;
-import model.SubTask;
-import model.Task;
-import service.TaskManager;
+import yandex.model.EpicTask;
+import yandex.model.Status;
+import yandex.model.SubTask;
+import yandex.model.Task;
+import yandex.service.TaskManager;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,17 +20,14 @@ public class Main {
 
         SubTask subTask1 = new SubTask("микро задача", "да че тут делать то", epicTask1.getId());
         SubTask subTask2 = new SubTask("нано задача", "раз два и готово", epicTask1.getId());
-        tm.create(subTask1);
-        tm.create(subTask2);
+        tm.create(subTask1, epicTask1.getId());
+        tm.create(subTask2, epicTask1.getId());
 
-        epicTask1.addNewSubTask(subTask1.getId());
-        epicTask1.addNewSubTask(subTask2.getId());
 
         EpicTask epicTask2 = new EpicTask("работать работу", "Ты должен делать то, что должен делать.");
         tm.create(epicTask2);
         SubTask subTask3 = new SubTask("работа не волк", "в лес не убежит", epicTask2.getId());
-        tm.create(subTask3);
-        epicTask2.addNewSubTask(subTask3.getId());
+        tm.create(subTask3, epicTask2.getId());
 
         for (Task task : tm.getTasks()) {
             System.out.println(task);
