@@ -1,4 +1,4 @@
-package yandex.model;
+package yandex.app.model;
 
 public enum Status {
     NEW,

@@ -1,4 +1,4 @@
-package yandex.model;
+package yandex.app.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class EpicTask extends Task {
                 '}';
     }
 
-    public void removeSubTaskById(int id) {
+    public void removeSubTaskById(Integer id) {
         subTaskIds.remove(id);
     }
 

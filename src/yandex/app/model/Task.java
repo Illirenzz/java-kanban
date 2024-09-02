@@ -1,12 +1,13 @@
-package yandex.model;
+package yandex.app.model;
 
 import java.util.Objects;
 
 public class Task {
-    protected Status status;
+    private int id;
+    private Status status;
     private String name;
     private String description;
-    private int id;
+
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
