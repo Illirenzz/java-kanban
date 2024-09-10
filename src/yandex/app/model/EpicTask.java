@@ -12,6 +12,9 @@ public class EpicTask extends Task {
     }
 
 
+    /**
+     * используется TaskManager-ом при добавлении подзадачи. в других местах, вручную, не использовать
+     */
     public void addNewSubTask(int subTask) {
         subTaskIds.add(subTask);
     }
