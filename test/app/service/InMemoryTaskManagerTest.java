@@ -1,16 +1,24 @@
-package yandex.app.service;
+package app.service;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import yandex.app.model.EpicTask;
 import yandex.app.model.SubTask;
 import yandex.app.model.Task;
+import yandex.app.service.Managers;
+import yandex.app.service.TaskManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+/**
+ * в многих тестах проходит сравнение объектов с разным состоянием но одинаковым id через equals.
+ * как я понял из тз, объекты с разными состояниями но одинаковым id должны быть идентичны по equals
+ */
 class InMemoryTaskManagerTest {
     static TaskManager taskManager;
 
@@ -24,8 +32,8 @@ class InMemoryTaskManagerTest {
         Task task1 = new Task("task1", "task");
         taskManager.create(task1);
 
-        assertNotNull(taskManager.getTaskById(task1.getId()));
-        assertEquals(task1, taskManager.getTaskById(task1.getId()));
+        Assertions.assertNotNull(taskManager.getTaskById(task1.getId()));
+        Assertions.assertEquals(task1, taskManager.getTaskById(task1.getId()));
     }
 
     @Test
@@ -33,8 +41,8 @@ class InMemoryTaskManagerTest {
         EpicTask epicTask = new EpicTask("epicTask", "big task");
         taskManager.create(epicTask);
 
-        assertNotNull(taskManager.getEpicTaskById(epicTask.getId()));
-        assertEquals(epicTask, taskManager.getEpicTaskById(epicTask.getId()));
+        Assertions.assertNotNull(taskManager.getEpicTaskById(epicTask.getId()));
+        Assertions.assertEquals(epicTask, taskManager.getEpicTaskById(epicTask.getId()));
     }
 
     @Test
@@ -44,8 +52,8 @@ class InMemoryTaskManagerTest {
         SubTask subTask = new SubTask("task1", "task", epicTask.getId());
         taskManager.create(subTask);
 
-        assertNotNull(taskManager.getSubTaskById(subTask.getId()));
-        assertEquals(subTask, taskManager.getSubTaskById(subTask.getId()));
+        Assertions.assertNotNull(taskManager.getSubTaskById(subTask.getId()));
+        Assertions.assertEquals(subTask, taskManager.getSubTaskById(subTask.getId()));
     }
 
     @Test
@@ -57,8 +65,8 @@ class InMemoryTaskManagerTest {
         updatedTask1.setId(task1.getId());
         taskManager.updateTask(updatedTask1);
 
-        assertEquals(updatedTask1, taskManager.getTaskById(task1.getId()));
-        assertEquals("updatedTask1", taskManager.getTaskById(task1.getId()).getDescription());
+        Assertions.assertEquals(updatedTask1, taskManager.getTaskById(task1.getId()));
+        Assertions.assertEquals("updatedTask1", taskManager.getTaskById(task1.getId()).getDescription());
     }
 
     @Test
@@ -74,8 +82,8 @@ class InMemoryTaskManagerTest {
         updatedSubTask1.setId(subTask.getId());
         taskManager.updateSubTask(updatedSubTask1);
 
-        assertEquals(updatedSubTask1, taskManager.getSubTaskById(subTask.getId()));
-        assertEquals("updatedSubTask1", taskManager.getSubTaskById(subTask.getId()).getDescription());
+        Assertions.assertEquals(updatedSubTask1, taskManager.getSubTaskById(subTask.getId()));
+        Assertions.assertEquals("updatedSubTask1", taskManager.getSubTaskById(subTask.getId()).getDescription());
     }
 
     @Test
@@ -87,19 +95,19 @@ class InMemoryTaskManagerTest {
 
         taskManager.updateEpicTask(epicTaskUpd);
 
-        assertEquals(epicTaskUpd, taskManager.getEpicTaskById(epicTask.getId()));
-        assertEquals("big task upd", taskManager.getEpicTaskById(epicTask.getId()).getDescription());
+        Assertions.assertEquals(epicTaskUpd, taskManager.getEpicTaskById(epicTask.getId()));
+        Assertions.assertEquals("big task upd", taskManager.getEpicTaskById(epicTask.getId()).getDescription());
     }
 
     @Test
     void removeAllTasks() {
         Task task1 = new Task("task1", "task");
         taskManager.create(task1);
-        assertEquals(task1, taskManager.getTaskById(task1.getId()));
+        Assertions.assertEquals(task1, taskManager.getTaskById(task1.getId()));
 
         taskManager.removeAllTasks();
 
-        assertEquals(0, taskManager.getTasks().size());
+        Assertions.assertEquals(0, taskManager.getTasks().size());
     }
 
     @Test
@@ -109,10 +117,10 @@ class InMemoryTaskManagerTest {
         SubTask subTask = new SubTask("task1", "task", epicTask.getId());
         taskManager.create(subTask);
 
-        assertEquals(subTask, taskManager.getSubTaskById(subTask.getId()));
+        Assertions.assertEquals(subTask, taskManager.getSubTaskById(subTask.getId()));
 
         taskManager.removeAllSubTasks();
-        assertEquals(0, taskManager.getSubTasks().size());
+        Assertions.assertEquals(0, taskManager.getSubTasks().size());
     }
 
     @Test
@@ -122,12 +130,12 @@ class InMemoryTaskManagerTest {
         SubTask subTask = new SubTask("task1", "task", epicTask.getId());
         taskManager.create(subTask);
 
-        assertEquals(epicTask, taskManager.getEpicTaskById(epicTask.getId()));
+        Assertions.assertEquals(epicTask, taskManager.getEpicTaskById(epicTask.getId()));
 
         taskManager.removeAllEpicTasks();
 
-        assertEquals(0, taskManager.getEpicTasks().size());
-        assertEquals(0, taskManager.getSubTasks().size());
+        Assertions.assertEquals(0, taskManager.getEpicTasks().size());
+        Assertions.assertEquals(0, taskManager.getSubTasks().size());
     }
 
     @Test
@@ -137,7 +145,7 @@ class InMemoryTaskManagerTest {
 
         Task test = taskManager.getTaskById(task1.getId());
 
-        assertEquals(task1, test);
+        Assertions.assertEquals(task1, test);
     }
 
     @Test

@@ -5,13 +5,14 @@ import yandex.app.model.Status;
 import yandex.app.model.SubTask;
 import yandex.app.model.Task;
 import yandex.app.service.InMemoryTaskManager;
+import yandex.app.service.Managers;
 import yandex.app.service.TaskManager;
 
 public class Main {
     public static void main(String[] args) {
         //сначала создаем объект, потом вызываем create taskManager-a, затем добавляем через метод addNewSub(для подзадач)
         //тесты с 4 спринта
-        InMemoryTaskManager inMemoryTM = new InMemoryTaskManager();
+        InMemoryTaskManager inMemoryTM = new InMemoryTaskManager(Managers.getDefaultHistory());
         Task task1 = new Task("задача1", "прост");
         Task task2 = new Task("задача2", "непрост");
         inMemoryTM.create(task1);
@@ -107,4 +108,5 @@ public class Main {
             System.out.println(task);
         }
     }
+
 }

@@ -1,8 +1,11 @@
-package yandex.app.service;
+package app.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import yandex.app.model.Task;
+import yandex.app.service.HistoryManager;
+import yandex.app.service.Managers;
+import yandex.app.service.TaskManager;
 
 import java.util.List;
 
